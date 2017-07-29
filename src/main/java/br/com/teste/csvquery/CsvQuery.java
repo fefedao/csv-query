@@ -1,7 +1,5 @@
 package br.com.teste.csvquery;
 
-import com.sun.deploy.util.StringUtils;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -19,31 +16,27 @@ import java.util.stream.Stream;
 public class CsvQuery {
 
     public static final String DEFAULT_CSV_FILE = "cidades.csv";
+    public static final String DEFAULT_FILE = CsvQuery.class.getResource("/" + DEFAULT_CSV_FILE).getPath();
     public static final String DEFAULT_SEPARATOR = ",";
-    public static List<Municipio> municipios;
+    public static final String REGEX_GRUPO_PALAVRAS_COMANDO = "(\\w+)\\s(\\w+)\\s(\\w+)";
 
-    //TODO Adicionar recebimento de arquivo por path
     public static void main (String []args) throws IOException {
-        try (Stream<String> stream = Files.lines(Paths.get(CsvQuery.class.getResource("/"+DEFAULT_CSV_FILE).getPath()))) {
-            municipios = new ArrayList<>();
-            stream.skip(1).forEach(s -> {
-                String[] splitDados = s.split(DEFAULT_SEPARATOR);
-                municipios.add(new Municipio(splitDados[0], splitDados[1], splitDados[2], splitDados[3], splitDados[4], splitDados[5]
-                        , splitDados[6], splitDados[7], splitDados[8], splitDados[9]));
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         System.out.println("===============================================");
         System.out.println("Importador CSV");
+        System.out.println("-----------------------------------------------");
+        System.out.println("Comandos aceitos: ");
+        System.out.println("count * - escreve no console a contagem total de registros importados (não deve considerar a linha de cabeçalho");
+        System.out.println("count distinct [propriedade] - escreve no console o total de valores distintos da propriedade (coluna) enviada");
+        System.out.println("filter [propriedade] [valor] - escreve no console a linha de cabeçalho e todas as linhas em que a propriedade enviada ");
         System.out.println("===============================================");
         System.out.println("Digite o comando de consulta: ");
         Scanner scan = new Scanner(System.in);
         String comando = scan.nextLine();
 
         if (comando.equals("count *")){
-            System.out.println("Quantidade de registros encontrados: " + municipios.size());
+            try (Stream<String> lines = Files.lines(Paths.get(CsvQuery.class.getResource("/"+DEFAULT_CSV_FILE).getPath()))) {
+                System.out.println("Quantidade de registros encontrados: " + String.valueOf(lines.count() - 1));
+            }
         }
 
         if (comando.contains("count distinct ")){
@@ -54,7 +47,7 @@ public class CsvQuery {
                 Matcher matcher = pattern.matcher(comando);
                 if (matcher.matches()){
                     String campoConsultado = matcher.group(3);
-                    inputStream  = new FileInputStream(CsvQuery.class.getResource("/"+DEFAULT_CSV_FILE).getPath());
+                    inputStream  = new FileInputStream(DEFAULT_FILE);
                     scanner = new Scanner(inputStream, "UTF-8");
                     String linhaColunas = scanner.nextLine();
                     String[] colunas = linhaColunas.split(DEFAULT_SEPARATOR);
@@ -64,6 +57,44 @@ public class CsvQuery {
                         valoresUnicos.add(scanner.nextLine().split(DEFAULT_SEPARATOR)[indiceColuna]);
                     }
                     System.out.println("Quantidade de registros encontrados: " + valoresUnicos.size());
+                    if (scanner.ioException() != null) {
+                        throw scanner.ioException();
+                    }
+                }
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (scanner != null) {
+                    scanner.close();
+                }
+            }
+        }
+
+        if (comando.contains("filter ")){
+            FileInputStream inputStream = null;
+            Scanner scanner = null;
+            try {
+                Pattern pattern = Pattern.compile(REGEX_GRUPO_PALAVRAS_COMANDO);
+                Matcher matcher = pattern.matcher(comando);
+                if (matcher.matches()){
+                    String campoConsultado = matcher.group(2);
+                    String valorConsultado = matcher.group(3);
+                    inputStream  = new FileInputStream(CsvQuery.class.getResource("/"+DEFAULT_CSV_FILE).getPath());
+                    scanner = new Scanner(inputStream, "UTF-8");
+                    String linhaColunas = scanner.nextLine();
+                    System.out.println(linhaColunas);
+
+                    String[] colunas = linhaColunas.split(DEFAULT_SEPARATOR);
+                    Integer indiceColuna = IntStream.range(0, colunas.length).filter(i -> campoConsultado.equals(colunas[i])).findFirst().getAsInt();
+
+                    while (scanner.hasNextLine()) {
+                        String linha = scanner.nextLine();
+                        if (linha.split(DEFAULT_SEPARATOR)[indiceColuna].equals(valorConsultado)){
+                            System.out.println(linha);
+                        }
+                    }
+
                     if (scanner.ioException() != null) {
                         throw scanner.ioException();
                     }
