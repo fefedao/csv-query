@@ -5,12 +5,10 @@ package br.com.teste.csvquery;
  */
 public class Municipio {
 
-    private String uf,name,capital,no_accents,alternative_names,microregion,mesoregion;
-    private Integer ibge_id;
-    private Long lon,lat;
+    private String uf,name,capital,no_accents,alternative_names,microregion,mesoregion,ibge_id, lon,lat;
 
     //ibge_id,uf,name,capital,lon,lat,no_accents,alternative_names,microregion,mesoregion
-    public Municipio(Integer ibge_id, String uf, String name, String capital, Long lon, Long lat, String no_accents, String alternative_names, String microregion, String mesoregion) {
+    public Municipio(String ibge_id, String uf, String name, String capital, String lon, String lat, String no_accents, String alternative_names, String microregion, String mesoregion) {
         this.uf = uf;
         this.name = name;
         this.capital = capital;
@@ -95,27 +93,27 @@ public class Municipio {
         this.mesoregion = mesoregion;
     }
 
-    public Integer getIbge_id() {
+    public String getIbge_id() {
         return ibge_id;
     }
 
-    public void setIbge_id(Integer ibge_id) {
+    public void setIbge_id(String ibge_id) {
         this.ibge_id = ibge_id;
     }
 
-    public Long getLon() {
+    public String getLon() {
         return lon;
     }
 
-    public void setLon(Long lon) {
+    public void setLon(String lon) {
         this.lon = lon;
     }
 
-    public Long getLat() {
+    public String getLat() {
         return lat;
     }
 
-    public void setLat(Long lat) {
+    public void setLat(String lat) {
         this.lat = lat;
     }
 }
