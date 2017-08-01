@@ -1,13 +1,19 @@
 group 'br.com.teste'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
-
 repositories {
     mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes ('Main-Class':'br.com.teste.csvquery.CsvQuery',
+                    'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')
+        )
+    }
 }
 
 dependencies {
