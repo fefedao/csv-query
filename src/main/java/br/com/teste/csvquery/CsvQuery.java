@@ -28,9 +28,15 @@ public class CsvQuery {
         String pathParaArquivo = null;
         boolean arquivoEncontrado = false;
         while (!arquivoEncontrado) {
-            System.out.println("Informe o caminho para o arquivo csv: ");
+            System.out.println("Informe o caminho para o arquivo .csv, ou digite sair para finalizar o aplicativo: ");
             pathParaArquivo = scan.nextLine();
-            if (Files.isReadable(Paths.get(pathParaArquivo))) {
+
+            if (pathParaArquivo.equals("sair")){
+            } else if (Files.isDirectory(Paths.get(pathParaArquivo))) {
+                System.out.println("O caminho informado se trata de um diretorio.");
+            } else if (!(pathParaArquivo.endsWith(".csv") || pathParaArquivo.endsWith(".CSV"))){
+                System.out.println("Arquivo com formato invalido.");
+            } else if (Files.isReadable(Paths.get(pathParaArquivo))) {
                 arquivoEncontrado = true;
             } else {
                 System.out.println("Arquivo nao encontrado ou sem permissao para leitura.");
