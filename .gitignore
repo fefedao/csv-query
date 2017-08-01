@@ -108,6 +108,7 @@ buildNumber.properties
 .gradle
 /gradle
 
+
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
 
