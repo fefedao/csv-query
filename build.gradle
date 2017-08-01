@@ -10,9 +10,7 @@ repositories {
 
 jar {
     manifest {
-        attributes ('Main-Class':'br.com.teste.csvquery.CsvQuery',
-                    'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')
-        )
+        attributes 'Main-Class': 'br.com.teste.csvquery.CsvQuery'
     }
 }
 
