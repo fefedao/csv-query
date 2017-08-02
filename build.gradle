@@ -10,7 +10,7 @@ repositories {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'br.com.teste.csvquery.CsvQuery'
+        attributes 'Main-Class': 'br.com.teste.csvquery.main.Main'
     }
 }
 
