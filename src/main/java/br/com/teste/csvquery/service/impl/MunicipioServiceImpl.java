@@ -11,10 +11,16 @@ import java.util.stream.Stream;
  */
 public class MunicipioServiceImpl implements MunicipioService {
 
+    private static MunicipioServiceImpl municipioServiceImpl = new MunicipioServiceImpl();
+    public static MunicipioServiceImpl getInstance() {
+        return municipioServiceImpl;
+    }
+    private MunicipioServiceImpl() {
+    }
+
     private static final String DEFAULT_SEPARATOR = ",";
 
     private MunicipioDAO municipioDAO;
-
 
     @Override
     public void consultarColunas() {
@@ -50,7 +56,7 @@ public class MunicipioServiceImpl implements MunicipioService {
     @Override
     public void defineRecurso(Object recurso) {
         if (recurso instanceof String && ((String) recurso).endsWith(".csv") || ((String) recurso).endsWith(".CSV")){
-            municipioDAO = new MunicipioCsvDAOImpl();
+            municipioDAO = MunicipioCsvDAOImpl.getInstance();
             municipioDAO.setDataDource(recurso);
         }
     }

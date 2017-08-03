@@ -15,6 +15,13 @@ import java.util.stream.Stream;
  */
 public class MunicipioCsvDAOImpl extends AbstractDAO implements MunicipioDAO  {
 
+    private static MunicipioCsvDAOImpl municipioCsvDAOImpl = new MunicipioCsvDAOImpl();
+    public static MunicipioCsvDAOImpl getInstance() {
+        return municipioCsvDAOImpl;
+    }
+    private MunicipioCsvDAOImpl() {
+    }
+
     private static final String DEFAULT_SEPARATOR = ",";
 
     @Override
