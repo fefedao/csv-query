@@ -1,0 +1,10 @@
+ibge_id,uf,name,capital,lon,lat,no_accents,alternative_names,microregion,mesoregion
+1100015,RO,Alta Floresta D'Oeste,,-61.9998238963,-11.9355403048,Alta Floresta D'Oeste,,Cacoal,Leste Rondoniense
+1100023,RO,Ariquemes,,-63.033269278,-9.9084628666,Ariquemes,,Ariquemes,Leste Rondoniense
+3540259,SP,Pontalinda,,-50.5246020157,-20.4408338429,Pontalinda,,Jales,São José do Rio Preto
+3540309,SP,Pontes Gestal,,-49.7035523558,-20.1823631062,Pontes Gestal,,Votuporanga,São José do Rio Preto
+3540408,SP,Populina,,-50.5368531154,-19.9443331307,Populina,,Jales,São José do Rio Preto
+3540507,SP,Porangaba,,-48.1267674358,-23.1753874993,Porangaba,,Tatuí,Itapetininga
+3540606,SP,Porto Feliz,,-47.5245965731,-23.214412268,Porto Feliz,,Sorocaba,Macro Metropolitana Paulista
+3540705,SP,Porto Ferreira,,-47.4814096434,-21.858362505,Porto Ferreira,,Piraçununga,Campinas
+5300108,DF,Brasília,true,-47.887905478,-15.7940873619,Brasilia,,Brasília,Distrito Federal

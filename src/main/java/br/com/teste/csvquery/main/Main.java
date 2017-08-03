@@ -2,6 +2,7 @@ package br.com.teste.csvquery.main;
 
 import br.com.teste.csvquery.service.MunicipioService;
 import br.com.teste.csvquery.service.impl.MunicipioServiceImpl;
+import br.com.teste.csvquery.util.Comando;
 import br.com.teste.csvquery.util.ComandoResolver;
 import br.com.teste.csvquery.util.ValidadorImportacaoCSV;
 
@@ -23,7 +24,16 @@ public class Main {
         Matcher matcher;
         boolean continuar = true;
 
-        String pathParaArquivo  = ValidadorImportacaoCSV.validar(scan);
+
+        String pathParaArquivo = null;
+        while (pathParaArquivo == null) {
+            System.out.println("Informe o caminho para o arquivo .csv, ou digite sair para finalizar o aplicativo: ");
+            pathParaArquivo = ValidadorImportacaoCSV.validar(scan.nextLine());
+            if (pathParaArquivo.equals(Comando.SAIR.getComando())){
+                System.exit(0);
+            }
+        }
+
         MunicipioService municipioService = MunicipioServiceImpl.getInstance();
         municipioService.defineRecurso(pathParaArquivo);
 
